@@ -1,0 +1,39 @@
+const Discord = require("discord.js");
+const client = new Discord.Client();
+
+client.on("ready", () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+});
+
+client.on("message", message => {
+  if (message.content === "$ban") {
+    // Vérifiez si l'utilisateur qui a exécuté la commande dispose des autorisations appropriées
+    if (!message.member.hasPermission("BAN_MEMBERS")) {
+      return message.reply("Vous n'avez pas la permission de bannir les membres.");
+    }
+
+    // Récupérez le premier utilisateur mentionné dans le message
+    const user = message.mentions.users.first();
+
+    // Vérifiez si un utilisateur a été mentionné
+    if (!user) {
+      return message.reply("Vous devez mentionner un utilisateur à bannir.");
+    }
+
+    // Vérifiez si vous ne pouvez pas bannir l'utilisateur mentionné
+    if (user.id === message.author.id) {
+      return message.reply("Vous ne pouvez pas cet utilisateur.");
+    }
+
+    // Bannir l'utilisateur mentionné
+    const member = message.guild.member(user);
+    member
+      .ban({
+        reason: "Banni par SonakBot."
+      })
+      .then(() => message.reply(`${user.tag} a été banni avec succès.`))
+      .catch(error => message.reply(`Je suis désolé, je n'ai pas pu bannir l'utilisateur. Raison : ${error}`));
+  }
+});
+
+client.login("MTA3MzM5NjQxMDM0MDM1NjE3Ng.GKWUJ9.xx-qdmUT4rzaU-_ViJ3cFHUDnEgkE2GLpg3QAY");
