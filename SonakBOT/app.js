@@ -64,4 +64,4 @@ bot.on("messageCreate", async message => {
 });
 
 //Token needed in config.json
-bot.login(MTA3MzM5NjQxMDM0MDM1NjE3Ng.GKWUJ9.xx-qdmUT4rzaU-_ViJ3cFHUDnEgkE2GLpg3QAY);
+bot.login(token);
